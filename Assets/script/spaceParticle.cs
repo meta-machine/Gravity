@@ -42,9 +42,10 @@ public class spaceParticle : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        //refreshState();
+        
         if (Input.GetKey(KeyCode.R)) {
             refresh = 0;
+            refreshState();
             //resetState();
             
         }

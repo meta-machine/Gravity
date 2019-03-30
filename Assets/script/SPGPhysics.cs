@@ -111,29 +111,16 @@ public class SPGPhysics : MonoBehaviour
             // non zero. When we know there has been a collisoin we can
             // respond to it.
             //Debug.Log("==>"+Hits[i].normal);
-            if (Hits[i].normal != Vector3.zero)
-            {
-                if (Velocities[i].magnitude <= 20f)
-                {
-                    Velocities[i] = Vector3.zero;
-                    Lifetimes[i] = 0;
-                    Sleeping[i]++; // increment the sleeping counter. any value over 1 is sleeping. We can use this to respawn objects after they have been static for while
-                }
-                else
-                {
-                    Velocities[i] = Vector3.Reflect(Velocities[i], Hits[i].normal);
 
-                    var angleBetweenNormalAndUp = Vector3.Angle(Hits[i].normal, Vector3.up); // returns a value between 0-180
-                    var lerp = angleBetweenNormalAndUp / 180f;
-                    Velocities[i] = Velocities[i] * Mathf.Lerp(0.5f, 1f, lerp);
-                }
-            }else{
-                if (Lifetimes[i] > 1f)
-                {
+            if (Hits[i].normal != Vector3.zero) {
+                Velocities[i] = Vector3.Reflect(Velocities[i], Hits[i].normal);
+                var angleBetweenNormalAndUp = Vector3.Angle(Hits[i].normal, Vector3.up); // returns a value between 0-180
+                var lerp = angleBetweenNormalAndUp / 180f;
+                Velocities[i] = Velocities[i] * Mathf.Lerp(0.5f, 1f, lerp);
+            }else if (Lifetimes[i] > 1f) {
                     Velocities[i] = Vector3.zero;
                     Lifetimes[i] = 0;
                     Sleeping[i]++; // increment the sleeping counter. any value over 1 is sleeping. We can use this to respawn objects after they have been static for while
-                }
             }
         }
     }
@@ -213,6 +200,9 @@ public class SPGPhysics : MonoBehaviour
             return;
 
         sampler.Begin();
+
+
+        //spgRate = Random.Range(11, 12);
         
         var deltaTime = Time.deltaTime;
 

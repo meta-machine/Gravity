@@ -24,7 +24,7 @@ public class Mass : MonoBehaviour
 		
     }
     void Update() {
-       // RefreshSparticles();
+       //RefreshSparticles();
         if (Input.GetKey(KeyCode.R)) {
             if (refresh == 1) {
                 refresh = 0;
@@ -38,7 +38,7 @@ public class Mass : MonoBehaviour
 
     void OnParticleCollision(GameObject spt)
     {
-		RefreshSparticles();
+		//RefreshSparticles();
         //Debug.Log("coll : " + spt.name);
     }
 
@@ -50,7 +50,7 @@ public class Mass : MonoBehaviour
 		float gval;
 		float dist;
 		
-        Debug.Log("==>"+this.name);
+        //Debug.Log("==>"+this.name);
 
 		
 		
@@ -67,12 +67,14 @@ public class Mass : MonoBehaviour
 			bool overlapping = mCollider.bounds.Contains(sparticle.transform.position);
 
 			if(overlapping){
-                gval = 0f;
+                //gval = 0f;
             }
 
 			ps = sparticle.GetComponent<ParticleSystem>();
 			var em = ps.emission;
-			float totalGval =  (gval);
+            em.rateOverTime = 1;
+			float totalGval =  em.rate.constant + gval;
+            //float totalGval =  em.rate.constant + (gval-em.rate.constant);
 			em.rateOverTime = totalGval; 
 
 			mText = sparticle.transform.Find("sTxt").GetComponent<TextMeshPro>();
